@@ -25,4 +25,4 @@ dist-ssr
 
 .env
 
-./src/pages/Test.tsx
+src/pages/Test.tsx
