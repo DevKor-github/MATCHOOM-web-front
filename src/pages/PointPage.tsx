@@ -17,7 +17,9 @@ const PointPage = () => {
           <div>
             <span>JUST JERK ACADEMY</span>
             <button onClick={() => openBottomSheet()}>결제규정</button>
-            <button>결제내역</button>
+            <button onClick={() => navigate(`/${id}/point/purchase/history`)}>
+              결제내역
+            </button>
           </div>
           <div>
             <span>권태현님</span>
