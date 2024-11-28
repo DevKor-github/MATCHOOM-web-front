@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
+import PointPage from 'pages/PointPage';
 import Test from 'pages/Test';
 
 export const createRouter = () => {
@@ -6,6 +7,10 @@ export const createRouter = () => {
     {
       path: '/test',
       element: <Test />,
+    },
+    {
+      path: '/:id/point',
+      element: <PointPage />,
     },
   ]);
 };
