@@ -1,7 +1,12 @@
+import { useNavigate, useParams } from 'react-router-dom';
 import useBottomSheet from 'hooks/useBottomSheet';
+import PointCard from 'components/common/PointCard';
 import BottomSheet from 'components/common/bottom-sheet/BottomSheet';
 
 const PointPage = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const { bottomSheetRef, contentRef, openBottomSheet } = useBottomSheet();
 
   return (
@@ -23,11 +28,13 @@ const PointPage = () => {
             </ul>
           </div>
           <ul>
-            <PointItem point={10000} price={10000} />
-            <PointItem point={20000} price={20000} />
-            <PointItem point={30000} price={30000} />
+            <PointCard point={10000} price={10000} title='원데이' />
+            <PointCard point={20000} price={20000} title='5회권' />
+            <PointCard point={30000} price={30000} title='10회권' />
           </ul>
-          <button>결제하기</button>
+          <button onClick={() => navigate(`/${id}/point/purchase`)}>
+            결제하기
+          </button>
         </main>
       </div>
       <BottomSheet ref={bottomSheetRef} title={'결제규정'}>
@@ -51,20 +58,6 @@ const MyPointItem = ({ point, expiredAt }: MyPointItemProps) => {
     <li className='flex items-center justify-between'>
       <span>{point}p</span>
       <span>{expiredAt}</span>
-    </li>
-  );
-};
-
-interface PointItemProps {
-  point: number;
-  price: number;
-}
-
-const PointItem = ({ point, price }: PointItemProps) => {
-  return (
-    <li className='flex justify-between gap-12'>
-      <div className='h-40 w-80 bg-grey-4'>{point}p</div>
-      <div>{price}원</div>
     </li>
   );
 };
