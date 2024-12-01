@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
+import MainPage from 'pages/MainPage';
 import PointPage from 'pages/PointPage';
 import PurchaseHistoryPage from 'pages/PurchaseHistoryPage';
 import PurchasePage from 'pages/PurchasePage';
-import Test from 'pages/Test';
 
 export const createRouter = () => {
   return createBrowserRouter([
@@ -10,8 +10,8 @@ export const createRouter = () => {
       path: '/',
       children: [
         {
-          path: 'test',
-          element: <Test />,
+          path: ':id',
+          element: <MainPage />,
         },
         {
           path: ':id/point',
