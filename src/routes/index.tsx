@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
+import LoginPage from 'pages/LoginPage';
 import MainPage from 'pages/MainPage';
 import PointPage from 'pages/PointPage';
 import PurchaseHistoryPage from 'pages/PurchaseHistoryPage';
@@ -12,6 +13,10 @@ export const createRouter = () => {
         {
           path: ':id',
           element: <MainPage />,
+        },
+        {
+          path: 'login',
+          element: <LoginPage />,
         },
         {
           path: ':id/point',
