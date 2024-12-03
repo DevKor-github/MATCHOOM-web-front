@@ -1,3 +1,4 @@
+import { OAUTH } from 'constants/oauth';
 import KakaoIcon from 'assets/icons/kakao.svg';
 
 const LoginPage = () => {
@@ -25,7 +26,10 @@ const LoginPage = () => {
           <button className='underline'>개인정보 처리방침</button> 동의를
           의미합니다
         </span>
-        <button className='flex h-52 w-full items-center justify-between rounded-[8px] bg-[#fee501] px-16 py-16 text-16 font-500 text-black'>
+        <button
+          onClick={() => (window.location.href = OAUTH.kakao())}
+          className='flex h-52 w-full items-center justify-between rounded-[8px] bg-[#fee501] px-16 py-16 text-16 font-500 text-black'
+        >
           <KakaoIcon />
           카카오 로그인
           <div className='w-24' />

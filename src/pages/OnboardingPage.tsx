@@ -28,6 +28,9 @@ const OnboardingPage = () => {
           placeholder='이름을 입력해주세요.'
           required
           control={control}
+          rules={{
+            required: true,
+          }}
         >
           이름
         </TextInput>
@@ -36,6 +39,9 @@ const OnboardingPage = () => {
           placeholder='전화번호를 입력해주세요.'
           required
           control={control}
+          rules={{
+            required: true,
+          }}
         >
           전화번호
         </TextInput>
@@ -44,6 +50,9 @@ const OnboardingPage = () => {
           placeholder='은행을 선택해주세요.'
           required
           control={control}
+          rules={{
+            required: true,
+          }}
         >
           은행
         </TextInput>
@@ -52,6 +61,9 @@ const OnboardingPage = () => {
           placeholder='계좌번호를 입력해주세요.'
           required
           control={control}
+          rules={{
+            required: true,
+          }}
         >
           계좌번호
         </TextInput>
