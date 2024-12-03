@@ -1,12 +1,20 @@
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import { Cookies } from 'react-cookie';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { setSession } from 'utils/handleSession';
+import {
+  ONBOARDING_TOKEN,
+  setAccessToken,
+  setRefreshToken,
+} from 'utils/handleToken';
 import { postLogin } from 'services/auth';
+import { getUser } from 'services/user';
 
 const OAuthPage = () => {
   const isInitiated = useRef(false);
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const handleOAuth = async () => {
     const code = searchParams.get('code');
@@ -16,15 +24,23 @@ const OAuthPage = () => {
     }
 
     try {
-      const isOnboarding = await postLogin(code);
-      if (isOnboarding) {
+      const res = await postLogin(code);
+      if (res.isOnboarding) {
+        const cookieStore = new Cookies();
+        cookieStore.set(ONBOARDING_TOKEN, res.refreshToken, {
+          path: '/',
+        });
         navigate('/onboarding');
       } else {
-        navigate('/');
+        setRefreshToken(res.refreshToken);
+        setAccessToken(res.accessToken);
+        const user = await getUser();
+        setSession(user);
+        navigate('/1');
       }
     } catch (e) {
-      console.error('로그인 실패: ', e);
       navigate('/login');
+      console.error('로그인 실패: ', e);
     }
   };
 

@@ -1,7 +1,8 @@
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { setSession } from 'utils/handleSession';
+import { setAccessToken } from 'utils/handleToken';
+import { setRefreshToken } from 'utils/handleToken';
 import { postOnboarding } from 'services/auth';
-import { setAuthHeader } from 'services/config';
 import TextInput from 'components/common/TextInput';
 import TextLogo from 'assets/icons/logo-text.svg';
 
@@ -14,12 +15,13 @@ interface OnboardingFormValue {
 
 const OnboardingPage = () => {
   const { control, handleSubmit } = useForm<OnboardingFormValue>();
-  const navigate = useNavigate();
 
   const handleOnboarding = async (formValue: OnboardingFormValue) => {
-    const accessToken = await postOnboarding(formValue);
-    setAuthHeader(accessToken);
-    navigate('/1');
+    const { accessToken, refreshToken } = await postOnboarding(formValue);
+    setAccessToken(accessToken);
+    setRefreshToken(refreshToken);
+    setSession(formValue);
+    window.location.href = '/1';
   };
 
   return (
