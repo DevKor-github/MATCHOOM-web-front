@@ -5,9 +5,13 @@
 @layer base {
   :root {
     font-size: 62.5%;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-smooth: never;
   }
 
   body {
-    @apply text-14 font-400;
+    @apply text-14 font-400 text-white;
   }
 }
