@@ -1,5 +1,5 @@
 import { Cookies } from 'react-cookie';
-import { ONBOARDING_TOKEN, REFRESH_TOKEN } from 'utils/handleToken';
+import { REFRESH_TOKEN } from 'utils/handleToken';
 import { UserType } from 'types/common';
 import { instance } from './config';
 
@@ -21,12 +21,10 @@ export const postLogin = async (code: string) => {
   return data;
 };
 
-export const postOnboarding = async (body: UserType) => {
-  const cookieStore = new Cookies();
-  const onboardingToken = cookieStore.get(ONBOARDING_TOKEN);
+export const postOnboarding = async (body: UserType, token: string) => {
   const res = await instance.post('/auth/register', body, {
     headers: {
-      Authorization: `Bearer ${onboardingToken}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   const data = res.data as { accessToken: string; refreshToken: string };

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRef } from 'react';
-import { Cookies } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { setSession } from 'utils/handleSession';
 import {
@@ -15,6 +15,7 @@ const OAuthPage = () => {
   const isInitiated = useRef(false);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const [_, setCookie] = useCookies([ONBOARDING_TOKEN]);
 
   const handleOAuth = async () => {
     const code = searchParams.get('code');
@@ -26,8 +27,7 @@ const OAuthPage = () => {
     try {
       const res = await postLogin(code);
       if (res.isOnboarding) {
-        const cookieStore = new Cookies();
-        cookieStore.set(ONBOARDING_TOKEN, res.refreshToken, {
+        setCookie(ONBOARDING_TOKEN, res.refreshToken, {
           path: '/',
         });
         navigate('/onboarding');

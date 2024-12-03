@@ -1,7 +1,9 @@
+import { useCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
 import { setSession } from 'utils/handleSession';
 import { setAccessToken } from 'utils/handleToken';
 import { setRefreshToken } from 'utils/handleToken';
+import { ONBOARDING_TOKEN } from 'utils/handleToken';
 import { postOnboarding } from 'services/auth';
 import TextInput from 'components/common/TextInput';
 import TextLogo from 'assets/icons/logo-text.svg';
@@ -15,9 +17,13 @@ interface OnboardingFormValue {
 
 const OnboardingPage = () => {
   const { control, handleSubmit } = useForm<OnboardingFormValue>();
+  const [cookies] = useCookies([ONBOARDING_TOKEN]);
 
   const handleOnboarding = async (formValue: OnboardingFormValue) => {
-    const { accessToken, refreshToken } = await postOnboarding(formValue);
+    const { accessToken, refreshToken } = await postOnboarding(
+      formValue,
+      cookies[ONBOARDING_TOKEN],
+    );
     setAccessToken(accessToken);
     setRefreshToken(refreshToken);
     setSession(formValue);
