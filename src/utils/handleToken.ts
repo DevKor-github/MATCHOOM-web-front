@@ -10,7 +10,6 @@ export const getRefreshToken = () => {
 };
 
 export const setRefreshToken = (value: string) => {
-  console.log('SET');
   localStorage.setItem(REFRESH_TOKEN, value);
 };
 

@@ -1,5 +1,5 @@
 import { Cookies } from 'react-cookie';
-import { REFRESH_TOKEN } from 'utils/handleToken';
+import { getRefreshToken, REFRESH_TOKEN } from 'utils/handleToken';
 import { UserType } from 'types/common';
 import { instance } from './config';
 
@@ -32,9 +32,7 @@ export const postOnboarding = async (body: UserType, token: string) => {
 };
 
 export const postRefreshToken = async () => {
-  const cookieStore = new Cookies();
-  const refreshToken = cookieStore.get(REFRESH_TOKEN);
-  console.log('REFRESH: ', refreshToken);
+  const refreshToken = getRefreshToken();
   const res = await instance.post('/auth/refresh-token', {
     headers: {
       Authorization: `Bearer ${refreshToken}`,
