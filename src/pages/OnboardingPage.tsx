@@ -1,4 +1,7 @@
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { postOnboarding } from 'services/auth';
+import { setAuthHeader } from 'services/config';
 import TextInput from 'components/common/TextInput';
 import TextLogo from 'assets/icons/logo-text.svg';
 
@@ -11,6 +14,13 @@ interface OnboardingFormValue {
 
 const OnboardingPage = () => {
   const { control, handleSubmit } = useForm<OnboardingFormValue>();
+  const navigate = useNavigate();
+
+  const handleOnboarding = async (formValue: OnboardingFormValue) => {
+    const accessToken = await postOnboarding(formValue);
+    setAuthHeader(accessToken);
+    navigate('/1');
+  };
 
   return (
     <main className='flex grow flex-col items-center px-20'>
@@ -22,7 +32,10 @@ const OnboardingPage = () => {
         <br />
         받을게요
       </h2>
-      <form className='flex w-full flex-col gap-16'>
+      <form
+        onSubmit={handleSubmit(handleOnboarding)}
+        className='flex w-full flex-col gap-16'
+      >
         <TextInput
           name='name'
           placeholder='이름을 입력해주세요.'
