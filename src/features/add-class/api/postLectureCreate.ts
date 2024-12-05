@@ -21,20 +21,30 @@ const postLectureCreate = async (
       endDiff: data.applyTime.end.diff,
       endTime: data.applyTime.end.time,
     },
+    genre: data.genre === -1 ? null : data.genre,
+    difficulty: data.difficulty === -1 ? null : data.difficulty,
+    description: data.description ? data.description : null,
+    musicLink: data.musicLink ? data.musicLink : null,
+    type: data.type ? data.type : null,
+    instructor: 'mock',
+    lectureTime: data.lectureTime.map((time) => ({
+      start: time.start.toISOString(),
+      end: time.end.toISOString(),
+    })),
   };
   console.log('request', request);
-  const response = await authInstance.post('/lectures/create', request);
+  const response = await authInstance.post('/lecture', request);
   return response.data;
 };
 
-export const usePostLectureCreate = () => {
+export const usePostLectureCreate = ({ id }: { id: number }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: postLectureCreate,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['lectures'] });
-      navigate('/add-class/result');
+      queryClient.invalidateQueries({ queryKey: ['lecture', id] });
+      navigate(`/${id}/add-class/result`);
     },
   });
 };

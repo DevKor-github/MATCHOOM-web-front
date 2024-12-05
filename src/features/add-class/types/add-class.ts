@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const creatorInfoSchema = z.object({
   name: z.string().min(1, '이름을 입력해주세요'),
-  fileId: z.number().min(1, '썸네일을 선택해주세요'),
+  fileId: z.number().min(0, '썸네일을 선택해주세요'),
 });
 
 export const lectureEssentialInfoSchema = z
@@ -16,7 +16,7 @@ export const lectureEssentialInfoSchema = z
       )
       .min(1, '강의 시간을 최소 1개 이상 입력해주세요'),
     room: z.string().min(1, '방을 입력해주세요'),
-    price: z.number().min(1, '가격을 입력해주세요'),
+    price: z.number().min(0, '가격을 입력해주세요'),
     type: z.string(),
   })
   .refine((data) => data.lectureTime.every((time) => time.start < time.end), {
@@ -32,8 +32,8 @@ export const lectureOptionalInfoSchema = z.object({
 });
 
 const baseReservationSchema = z.object({
-  minCapacity: z.number().min(1, '최소 수강 인원을 입력해주세요'),
-  maxCapacity: z.number().min(1, '최대 수강 인원을 입력해주세요'),
+  minCapacity: z.number().min(0, '최소 수강 인원을 입력해주세요'),
+  maxCapacity: z.number().min(0, '최대 수강 인원을 입력해주세요'),
   applyTime: z.object({
     start: z
       .object({ diff: z.number(), time: z.string() })
