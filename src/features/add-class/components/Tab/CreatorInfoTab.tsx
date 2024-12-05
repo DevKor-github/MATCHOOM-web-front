@@ -1,4 +1,6 @@
 import { Control, Controller, FieldErrors } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
+import { useGetThumbnailList } from 'features/add-class/api/getThumbnailList';
 import { AddClassFormType } from 'features/add-class/types/add-class';
 import AddThumbnailButton from '../Button/AddThumbnailButton';
 import Label from '../Input/Label';
@@ -21,11 +23,7 @@ const THUMBNAIL_STYLE = {
   isNotSelected: 'aspect-square w-full overflow-hidden rounded-12',
 };
 
-const THUMBNAIL_OPTIONS = [
-  { id: 1, src: 'https://picsum.photos/300/300' },
-  { id: 2, src: 'https://picsum.photos/300/300' },
-  { id: 3, src: 'https://picsum.photos/300/300' },
-];
+const THUMBNAIL_LIST = [{ id: 0, url: 'https://via.placeholder.com/150' }];
 
 const CreatorInfoTab = ({
   control,
@@ -34,6 +32,10 @@ const CreatorInfoTab = ({
   control: Control<AddClassFormType>;
   errors: FieldErrors<AddClassFormType>;
 }) => {
+  const { id } = useParams();
+  const { data: thumbnailList } = useGetThumbnailList({
+    studioId: Number(id),
+  });
   return (
     <div className='flex h-full w-full flex-col'>
       <div className='mb-12 h-44 text-24 font-700 text-white'>
@@ -55,20 +57,20 @@ const CreatorInfoTab = ({
           render={({ field }) => (
             <div className='grid grid-cols-3 gap-8'>
               <AddThumbnailButton />
-              {THUMBNAIL_OPTIONS.map((option) => (
+              {THUMBNAIL_LIST.map((thumbnail) => (
                 <button
-                  key={option.id}
+                  key={thumbnail.id}
                   type='button'
-                  onClick={() => field.onChange(option.id)}
+                  onClick={() => field.onChange(thumbnail.id)}
                   className={
-                    field.value === option.id
+                    field.value === thumbnail.id
                       ? THUMBNAIL_STYLE.isSelected
                       : THUMBNAIL_STYLE.isNotSelected
                   }
                 >
                   <img
-                    src={option.src}
-                    alt={`thumbnail-${option.id}`}
+                    src={thumbnail.url}
+                    alt={`thumbnail-${thumbnail.id}`}
                     className='h-full w-full object-cover'
                   />
                 </button>

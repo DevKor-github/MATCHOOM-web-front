@@ -23,18 +23,18 @@ const postLectureCreate = async (
     },
   };
   console.log('request', request);
-  const response = await authInstance.post('/lectures/create', request);
+  const response = await authInstance.post('/lecture', request);
   return response.data;
 };
 
-export const usePostLectureCreate = () => {
+export const usePostLectureCreate = ({ id }: { id: number }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: postLectureCreate,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['lectures'] });
-      navigate('/add-class/result');
+      queryClient.invalidateQueries({ queryKey: ['lecture', id] });
+      navigate(`/${id}/add-class/result`);
     },
   });
 };
