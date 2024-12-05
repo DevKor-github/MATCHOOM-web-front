@@ -1,8 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
+import LectureDetailPage from 'pages/LectureDetailPage';
+import LectureRegisterPage from 'pages/LectureRegisterPage';
 import PointPage from 'pages/PointPage';
 import PurchaseHistoryPage from 'pages/PurchaseHistoryPage';
 import PurchasePage from 'pages/PurchasePage';
-import Test from 'pages/Test';
 
 export const createRouter = () => {
   return createBrowserRouter([
@@ -10,8 +11,12 @@ export const createRouter = () => {
       path: '/',
       children: [
         {
-          path: 'test',
-          element: <Test />,
+          path: 'id/class',
+          element: <LectureDetailPage />,
+        },
+        {
+          path: 'id/class/register',
+          element: <LectureRegisterPage />,
         },
         {
           path: ':id/point',
