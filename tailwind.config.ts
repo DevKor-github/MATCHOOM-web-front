@@ -66,6 +66,9 @@ export default {
         6: '#636872',
         7: '#3C4048',
       },
+      red: {
+        warning: '#FF5470',
+      },
     },
   },
   plugins: [],
