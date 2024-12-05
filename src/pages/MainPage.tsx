@@ -4,6 +4,7 @@ import useBottomSheet from 'hooks/useBottomSheet';
 import Header from 'components/common/Header';
 import BottomSheet from 'components/common/bottom-sheet/BottomSheet';
 import { Card } from 'components/explore/Card';
+import { useGetStudioInfo } from 'features/main/api/getStudioInfo';
 import AddClassButton from 'features/main/components/Button/AddClassButton';
 import ManageButton from 'features/main/components/Button/ManageButton';
 import SearchBarButton from 'features/main/components/Button/SearchBarButton';
@@ -42,6 +43,8 @@ const MainPage = () => {
   const { bottomSheetRef, openBottomSheet, closeBottomSheet } =
     useBottomSheet();
 
+  const { data: studioInfo } = useGetStudioInfo({ studioId: Number(id) });
+
   return (
     <>
       <Header />
@@ -62,8 +65,14 @@ const MainPage = () => {
             />
           </div>
           <div className='flex flex-col gap-12'>
-            {MOCK_CARD_LIST.map((card, index) => (
-              <Card key={`${card.title + index}`} {...card} />
+            {studioInfo?.lectures.map((lecture, index) => (
+              <Card
+                key={`${lecture.instructor + index}`}
+                guide={lecture.studioName}
+                imageSrc={lecture.thumbnail}
+                title={lecture.instructor}
+                {...lecture}
+              />
             ))}
             <AddClassButton />
           </div>

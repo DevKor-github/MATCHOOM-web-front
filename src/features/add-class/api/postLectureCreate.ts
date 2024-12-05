@@ -21,6 +21,16 @@ const postLectureCreate = async (
       endDiff: data.applyTime.end.diff,
       endTime: data.applyTime.end.time,
     },
+    genre: data.genre === -1 ? null : data.genre,
+    difficulty: data.difficulty === -1 ? null : data.difficulty,
+    description: data.description ? data.description : null,
+    musicLink: data.musicLink ? data.musicLink : null,
+    type: data.type ? data.type : null,
+    instructor: 'mock',
+    lectureTime: data.lectureTime.map((time) => ({
+      start: time.start.toISOString(),
+      end: time.end.toISOString(),
+    })),
   };
   console.log('request', request);
   const response = await authInstance.post('/lecture', request);

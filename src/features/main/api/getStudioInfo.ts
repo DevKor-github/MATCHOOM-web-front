@@ -7,7 +7,15 @@ type StudioInfoRequest = {
 
 type StudioInfoResponse = {
   name: string;
-  imageUrl: string;
+  description: string;
+  policy: string;
+  lectures: {
+    lectureId: number;
+    thumbnail: string;
+    studioName: string;
+    instructor: string;
+    description: string;
+  }[];
 };
 
 const getStudioInfo = async (studioId: number): Promise<StudioInfoResponse> => {

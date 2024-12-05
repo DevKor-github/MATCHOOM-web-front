@@ -17,7 +17,7 @@ const postThumbnail = async (
   formData.append('studioId', String(data.studioId));
   formData.append('file', data.file);
 
-  const response = await authInstance.post('/media', formData, {
+  const response = await authInstance.post('/media/upload', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },

@@ -5,17 +5,12 @@ type getThumbnailListRequest = {
   studioId: number;
 };
 
-type getThumbnailListResponse = {
-  id: number;
-  date: Date;
-  url: string;
-}[];
+type getThumbnailListResponse = string[];
 
 const getThumbnailList = async (
   studioId: number,
 ): Promise<getThumbnailListResponse> => {
   const response = await authInstance.get(`/media/${studioId}`);
-  console.log(response.data);
   return response.data;
 };
 

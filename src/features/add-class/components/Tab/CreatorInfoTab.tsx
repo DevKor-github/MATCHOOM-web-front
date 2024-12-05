@@ -23,8 +23,6 @@ const THUMBNAIL_STYLE = {
   isNotSelected: 'aspect-square w-full overflow-hidden rounded-12',
 };
 
-const THUMBNAIL_LIST = [{ id: 0, url: 'https://via.placeholder.com/150' }];
-
 const CreatorInfoTab = ({
   control,
   errors,
@@ -57,20 +55,20 @@ const CreatorInfoTab = ({
           render={({ field }) => (
             <div className='grid grid-cols-3 gap-8'>
               <AddThumbnailButton />
-              {THUMBNAIL_LIST.map((thumbnail) => (
+              {thumbnailList?.map((thumbnailUrl, index) => (
                 <button
-                  key={thumbnail.id}
+                  key={`thumbnail-${index}`}
                   type='button'
-                  onClick={() => field.onChange(thumbnail.id)}
+                  onClick={() => field.onChange(index)}
                   className={
-                    field.value === thumbnail.id
+                    field.value === index
                       ? THUMBNAIL_STYLE.isSelected
                       : THUMBNAIL_STYLE.isNotSelected
                   }
                 >
                   <img
-                    src={thumbnail.url}
-                    alt={`thumbnail-${thumbnail.id}`}
+                    src={thumbnailUrl}
+                    alt={`thumbnail-${index}`}
                     className='h-full w-full object-cover'
                   />
                 </button>
