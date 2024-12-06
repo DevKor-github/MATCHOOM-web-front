@@ -33,7 +33,7 @@ export const postOnboarding = async (body: UserType, token: string) => {
 
 export const postRefreshToken = async () => {
   const refreshToken = getRefreshToken();
-  const res = await instance.post('/auth/refresh-token', {
+  const res = await instance.post('/auth/refresh-token', undefined, {
     headers: {
       Authorization: `Bearer ${refreshToken}`,
     },
