@@ -1,9 +1,10 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const PaymentButton = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const handleClick = () => {
-    navigate(`/id/class/register`);
+    navigate(`/${id}/class/register`);
   };
 
   return (

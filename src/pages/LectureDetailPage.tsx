@@ -1,7 +1,9 @@
-import PaymentButton from 'features/LectureDetailInfo/buttons/PaymentButton';
-import ClassDetailInfo from 'features/LectureDetailInfo/components/LectureDetailInfo';
-import ClassHeader from 'features/LectureDetailInfo/components/LectureHeader';
-import ClassInfo from 'features/LectureDetailInfo/components/LectureInfo';
+import { useParams } from 'react-router-dom';
+import { useGetLectureDetail } from 'features/lecturedetail/api/getLectureDetail';
+import PaymentButton from 'features/lecturedetail/buttons/PaymentButton';
+import ClassDetailInfo from 'features/lecturedetail/components/LectureDetailInfo';
+import ClassHeader from 'features/lecturedetail/components/LectureHeader';
+import ClassInfo from 'features/lecturedetail/components/LectureInfo';
 
 const MOCK_CLASSINFO = {
   imageSrc: 'http://via.placeholder.com/640x480',
@@ -26,6 +28,9 @@ const MOCK_DETAILINFO = {
 };
 
 const ClassDetailPage = () => {
+  const { lectureId } = useParams();
+  const { data } = useGetLectureDetail(Number(lectureId));
+
   return (
     <div className='flex flex-1 flex-col  bg-background '>
       <ClassHeader
