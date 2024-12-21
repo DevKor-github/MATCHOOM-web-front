@@ -1,5 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
+import AddClassPage from 'pages/AddClassPage';
+import AddResultPage from 'pages/AddResultPage';
+import LoginPage from 'pages/LoginPage';
 import MainPage from 'pages/MainPage';
+import OAuthPage from 'pages/OAuthPage';
+import OnboardingPage from 'pages/OnboardingPage';
 import PointPage from 'pages/PointPage';
 import PurchaseHistoryPage from 'pages/PurchaseHistoryPage';
 import PurchasePage from 'pages/PurchasePage';
@@ -14,6 +19,18 @@ export const createRouter = () => {
           element: <MainPage />,
         },
         {
+          path: 'login',
+          element: <LoginPage />,
+        },
+        {
+          path: 'onboarding',
+          element: <OnboardingPage />,
+        },
+        {
+          path: 'auth/kakao/callback',
+          element: <OAuthPage />,
+        },
+        {
           path: ':id/point',
           element: <PointPage />,
         },
@@ -24,6 +41,14 @@ export const createRouter = () => {
         {
           path: ':id/point/purchase/history',
           element: <PurchaseHistoryPage />,
+        },
+        {
+          path: ':id/add-class',
+          element: <AddClassPage />,
+        },
+        {
+          path: ':id/add-class/result',
+          element: <AddResultPage />,
         },
       ],
     },
