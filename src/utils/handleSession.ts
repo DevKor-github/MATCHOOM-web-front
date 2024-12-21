@@ -3,6 +3,7 @@ export interface SessionType {
   phone: string;
   bank: string;
   account: string;
+  accountHolder: string;
 }
 
 const SESSION = 'session';

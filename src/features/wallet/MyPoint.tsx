@@ -24,7 +24,7 @@ const MyPoint = () => {
         {session?.name} 님
         <span className='mx-12 text-14 font-500'>잔여 포인트</span>
       </h4>
-      <div className='text-24 font-700 text-green'>{totalPoint} p</div>
+      <div className='py-16 text-24 font-700 text-green'>{totalPoint} p</div>
       <ul>
         {userPoint?.map((point) => (
           <MyPointItem point={point.point} expiredAt={point.expiration} />
@@ -42,10 +42,11 @@ interface MyPointItemProps {
 }
 
 const MyPointItem = ({ point, expiredAt }: MyPointItemProps) => {
+  const parsedExpiredAt = expiredAt.split(' ')?.[0].replace(/-/g, '.');
   return (
     <li className='flex items-center justify-between'>
-      <span>{point}p</span>
-      <span>{expiredAt}</span>
+      <span className='text-16 font-500'>{point.toLocaleString()} p</span>
+      <span className='text-12 font-500'>{parsedExpiredAt} 까지</span>
     </li>
   );
 };
