@@ -2,8 +2,8 @@ const ClassDetailInfo = ({
   videoSrc,
   detail,
 }: {
-  videoSrc: string;
-  detail: string;
+  videoSrc: string | undefined;
+  detail: string | undefined;
 }) => {
   return (
     <div className='gpa-12 mx-20 flex flex-col text-white'>

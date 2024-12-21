@@ -33,11 +33,11 @@ export const createRouter = () => {
           element: <OAuthPage />,
         },
         {
-          path: ':id/class',
+          path: ':id/:lectureId',
           element: <LectureDetailPage />,
         },
         {
-          path: ':id/class/register',
+          path: ':id/:lectureId/register',
           element: <LectureRegisterPage />,
         },
         {
