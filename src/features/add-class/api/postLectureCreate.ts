@@ -26,13 +26,17 @@ const postLectureCreate = async (
       endDiff: data.applyTime.end.diff,
       endTime: data.applyTime.end.time,
     },
+    lectureTime: data.lectureTime.map((time) => ({
+      start: time.start.toISOString(),
+      end: time.end.toISOString(),
+    })),
   };
   console.log('request', request);
   const response = await authInstance.post('/lecture', request);
   return response.data;
 };
 
-export const usePostLectureCreate = () => {
+export const usePostLectureCreate = ({ id }: { id: number }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   return useMutation({

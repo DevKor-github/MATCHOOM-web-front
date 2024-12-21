@@ -1,7 +1,4 @@
-import {
-  RESERVATION_DATE_DIFF_LIST,
-  RESERVATION_TIME_LIST,
-} from 'constants/class';
+import { RESERVATION_TIME_LIST } from 'constants/class';
 import Picker from 'react-mobile-picker';
 import { twMerge } from 'tailwind-merge';
 
@@ -12,30 +9,26 @@ const PickerStyle = {
 
 interface TimePickerValue {
   [key: string]: number | string;
-  diff: number;
   time: string;
 }
 
 const selections = {
-  diff: RESERVATION_DATE_DIFF_LIST.map((_, index) => index),
   time: RESERVATION_TIME_LIST,
 };
 
 const ReservationTimePicker = ({
-  value = { diff: 0, time: '00:00' },
+  value = { time: '00:00' },
   onChange,
 }: {
-  value?: { diff: number; time: string };
-  onChange: (value: { diff: number; time: string }) => void;
+  value?: { time: string };
+  onChange: (value: { time: string }) => void;
 }) => {
   const pickerValue: TimePickerValue = {
-    diff: value.diff,
     time: value.time,
   };
 
   const handleChange = (newValue: TimePickerValue) => {
     onChange({
-      diff: Number(newValue.diff),
       time: newValue.time,
     });
   };
@@ -54,9 +47,7 @@ const ReservationTimePicker = ({
                       selected ? PickerStyle.selected : PickerStyle.unselected,
                     )}
                   >
-                    {key === 'diff'
-                      ? RESERVATION_DATE_DIFF_LIST[option as number]
-                      : option}
+                    {option}
                   </div>
                 )}
               </Picker.Item>

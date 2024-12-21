@@ -56,6 +56,11 @@ const LectureEssentialInfoTab = ({
     name: 'lectureTime',
   });
 
+  const defaultValues = useWatch({
+    control,
+    name: 'lectureTime.0',
+  });
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -115,12 +120,6 @@ const LectureEssentialInfoTab = ({
             }
           />
           <div className='flex flex-col gap-8'>
-            <BoxButton
-              text={TEXT.button.addDate}
-              onClick={handleAddDateClick}
-              textStyle='text-16 text-white font-700'
-            />
-
             <div className='flex max-h-240 flex-col gap-8 overflow-y-scroll'>
               {lectureTimeList.map(({ start, end }, index) => {
                 return (
@@ -132,7 +131,7 @@ const LectureEssentialInfoTab = ({
                         <BoxButton
                           text={formatDate(value)}
                           onClick={() => handleStartDateClick(index)}
-                          textStyle='text-16 text-white'
+                          textStyle={`text-16 ${value === defaultValues?.start ? 'text-grey-4' : 'text-white'}`}
                         />
                       )}
                     />
@@ -143,7 +142,7 @@ const LectureEssentialInfoTab = ({
                         <BoxButton
                           text={formatDate(value)}
                           onClick={() => handleEndDateClick(index)}
-                          textStyle='text-16 text-white'
+                          textStyle={`text-16 ${value === defaultValues?.end ? 'text-grey-4' : 'text-white'}`}
                         />
                       )}
                     />
@@ -151,6 +150,12 @@ const LectureEssentialInfoTab = ({
                 );
               })}
             </div>
+
+            <BoxButton
+              text={TEXT.button.addDate}
+              onClick={handleAddDateClick}
+              textStyle='text-16 text-white font-700'
+            />
           </div>
         </div>
         <div className='flex h-fit w-full flex-col gap-8'>
@@ -175,32 +180,38 @@ const LectureEssentialInfoTab = ({
           </div>
         </div>
       </div>
-      <Controller
-        name={`lectureTime.${lectureTimeIndex}.start`}
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <div
-            className='w-full'
-            ref={startDateRef}
-            style={{ display: 'none' }}
-          >
-            <div className='flex w-full flex-col items-end justify-end bg-black'>
-              <DateTimePicker value={value} onChange={onChange} />
+      <div className='absolute bottom-80 left-0 w-full'>
+        <Controller
+          name={`lectureTime.${lectureTimeIndex}.start`}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <div
+              className='w-full'
+              ref={startDateRef}
+              style={{ display: 'none' }}
+            >
+              <div className='flex w-full flex-col items-end justify-end bg-black'>
+                <DateTimePicker value={value} onChange={onChange} />
+              </div>
             </div>
-          </div>
-        )}
-      />
-      <Controller
-        name={`lectureTime.${lectureTimeIndex}.end`}
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <div className='w-full' ref={endDateRef} style={{ display: 'none' }}>
-            <div className='flex w-full flex-col items-end justify-end bg-black'>
-              <DateTimePicker value={value} onChange={onChange} />
+          )}
+        />
+        <Controller
+          name={`lectureTime.${lectureTimeIndex}.end`}
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <div
+              className='w-full'
+              ref={endDateRef}
+              style={{ display: 'none' }}
+            >
+              <div className='flex w-full flex-col items-end justify-end bg-black'>
+                <DateTimePicker value={value} onChange={onChange} />
+              </div>
             </div>
-          </div>
-        )}
-      />
+          )}
+        />
+      </div>
     </div>
   );
 };
