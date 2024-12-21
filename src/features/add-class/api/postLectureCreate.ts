@@ -37,9 +37,11 @@ export const usePostLectureCreate = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: postLectureCreate,
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['lecture'] });
-      navigate('/add-class/result');
+      navigate('result', {
+        state: variables,
+      });
     },
   });
 };
