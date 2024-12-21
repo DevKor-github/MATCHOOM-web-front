@@ -11,6 +11,10 @@ type StudioInfoResponse = {
   policy: string;
   thumbnail: string;
   lectures: {
+    lectureTime: {
+      start: string;
+      end: string;
+    }[];
     lectureId: number;
     thumbnail: string;
     studioName: string;

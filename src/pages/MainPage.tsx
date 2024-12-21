@@ -1,13 +1,11 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useBottomSheet from 'hooks/useBottomSheet';
 import Header from 'components/common/Header';
 import BottomSheet from 'components/common/bottom-sheet/BottomSheet';
 import { Card } from 'components/explore/Card';
 import { useGetStudioInfo } from 'features/main/api/getStudioInfo';
-import AddClassButton from 'features/main/components/Button/AddClassButton';
 import MainButtonField from 'features/main/components/Button/MainButtonField';
-import ManageButton from 'features/main/components/Button/ManageButton';
 import SearchBarButton from 'features/main/components/Button/SearchBarButton';
 import Calendar from 'features/main/components/Calendar';
 import StudioHeader from 'features/main/components/Header/StudioHeader';
@@ -20,6 +18,7 @@ const TEXT = {
 
 const MainPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const { bottomSheetRef, openBottomSheet, closeBottomSheet } =
     useBottomSheet();
@@ -27,6 +26,17 @@ const MainPage = () => {
   const { data: studioInfo } = useGetStudioInfo({ studioId: Number(id) });
 
   console.log(studioInfo);
+
+  const filteredLectures = studioInfo?.lectures.filter((lecture) => {
+    return lecture.lectureTime.some((time) => {
+      const timeStart = new Date(time.start);
+      return (
+        timeStart.getFullYear() === selectedDate.getFullYear() &&
+        timeStart.getMonth() === selectedDate.getMonth() &&
+        timeStart.getDate() === selectedDate.getDate()
+      );
+    });
+  });
 
   return (
     <div className='flex flex-1 touch-none flex-col overflow-hidden bg-background'>
@@ -49,22 +59,28 @@ const MainPage = () => {
             />
           </div>
           <div className='flex flex-col gap-12'>
-            {studioInfo?.lectures.map((lecture, index) => (
-              <Card
+            {filteredLectures?.map((lecture, index) => (
+              <button
                 key={`${lecture.instructor + index}`}
-                guide={lecture.studioName}
-                imageSrc={lecture.thumbnail}
-                title={lecture.instructor}
-                {...lecture}
-              />
+                onClick={() => navigate(`class/${lecture.lectureId}`)}
+              >
+                <Card
+                  guide={lecture.studioName}
+                  imageSrc={lecture.thumbnail}
+                  title={lecture.instructor}
+                  {...lecture}
+                />
+              </button>
             ))}
           </div>
           <MainButtonField />
         </div>
         <BottomSheet ref={bottomSheetRef} title={studioInfo?.name || ''}>
-          <div className='h-full min-h-500 w-full rounded-24 bg-grey-4'></div>
+          <div className='h-full min-h-500 w-full rounded-24 bg-grey-4 px-12 py-24 text-16 font-600'>
+            {studioInfo?.description}
+          </div>
           <button
-            className='font-bold my-12 h-80 w-full rounded-full bg-green text-20'
+            className='font-bold my-12 h-60 w-full rounded-full bg-green text-20'
             onClick={closeBottomSheet}
           >
             {TEXT.button.complete}

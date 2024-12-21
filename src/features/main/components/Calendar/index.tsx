@@ -2,6 +2,7 @@ import { DAYS_OF_WEEK, MONTH_NAMES } from 'constants/date';
 import { useState, useRef } from 'react';
 import { getDaysInMonth, getFirstDayOfMonth } from 'features/main/utils/date';
 import DayBox from './DayBox';
+import WeekDayBox from './WeekDayBox';
 
 const TEXT = {
   MONTH_VIEW: '월별보기',
@@ -30,6 +31,9 @@ const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
     setSelectedDate(
       new Date(selectedDate.getFullYear(), selectedDate.getMonth(), date),
     );
+    if (viewMode === VIEW_MODE.MONTH) {
+      setViewMode(VIEW_MODE.WEEK);
+    }
   };
 
   const getWeekDates = () => {
@@ -104,14 +108,13 @@ const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
         onTouchStart={handleDragStart}
         onTouchEnd={handleDragEnd}
       >
-        {DAYS_OF_WEEK.map((day) => (
-          <div key={day} className='font-bold text-center'>
-            {day}
-          </div>
-        ))}
-
         {viewMode === VIEW_MODE.MONTH ? (
           <>
+            {DAYS_OF_WEEK.map((day) => (
+              <div key={day} className='font-bold text-center text-12'>
+                {day}
+              </div>
+            ))}
             {[...Array(getFirstDayOfMonth(selectedDate))].map((_, index) => (
               <div key={`empty-${index}`} />
             ))}
@@ -123,7 +126,6 @@ const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
               >
                 <DayBox
                   date={index + 1}
-                  isSelected={index + 1 === selectedDate.getDate()}
                   onSelect={handleSelectDate}
                   hasClass={true}
                 />
@@ -131,13 +133,14 @@ const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
             ))}
           </>
         ) : (
-          getWeekDates().map((date) =>
+          getWeekDates().map((date, index) =>
             date.getMonth() === selectedDate.getMonth() ? (
               <div
                 key={date.getTime()}
                 className='flex flex-1 items-center justify-center'
               >
-                <DayBox
+                <WeekDayBox
+                  index={index}
                   date={date.getDate()}
                   isSelected={
                     date.getDate() === selectedDate.getDate() &&
