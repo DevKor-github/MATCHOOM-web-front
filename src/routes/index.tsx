@@ -5,9 +5,9 @@ import LoginPage from 'pages/LoginPage';
 import MainPage from 'pages/MainPage';
 import OAuthPage from 'pages/OAuthPage';
 import OnboardingPage from 'pages/OnboardingPage';
-import PointPage from 'pages/PointPage';
 import PurchaseHistoryPage from 'pages/PurchaseHistoryPage';
 import PurchasePage from 'pages/PurchasePage';
+import WalletPage from 'pages/WalletPage';
 
 export const createRouter = () => {
   return createBrowserRouter([
@@ -31,8 +31,8 @@ export const createRouter = () => {
           element: <OAuthPage />,
         },
         {
-          path: ':id/point',
-          element: <PointPage />,
+          path: ':id/wallet',
+          element: <WalletPage />,
         },
         {
           path: ':id/point/purchase',

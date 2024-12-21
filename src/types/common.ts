@@ -3,4 +3,5 @@ export interface UserType {
   phone: string;
   bank: string;
   account: string;
+  accountHolder: string;
 }
