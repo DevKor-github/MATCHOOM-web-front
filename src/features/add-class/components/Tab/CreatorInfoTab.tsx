@@ -34,6 +34,7 @@ const CreatorInfoTab = ({
   const { data: thumbnailList } = useGetThumbnailList({
     studioId: Number(id),
   });
+  console.log(thumbnailList);
   return (
     <div className='flex h-full w-full flex-col'>
       <div className='mb-12 h-44 text-24 font-700 text-white'>
@@ -55,24 +56,26 @@ const CreatorInfoTab = ({
           render={({ field }) => (
             <div className='grid grid-cols-3 gap-8'>
               <AddThumbnailButton />
-              {thumbnailList?.map((thumbnailUrl, index) => (
-                <button
-                  key={`thumbnail-${index}`}
-                  type='button'
-                  onClick={() => field.onChange(index)}
-                  className={
-                    field.value === index
-                      ? THUMBNAIL_STYLE.isSelected
-                      : THUMBNAIL_STYLE.isNotSelected
-                  }
-                >
-                  <img
-                    src={thumbnailUrl}
-                    alt={`thumbnail-${index}`}
-                    className='h-full w-full object-cover'
-                  />
-                </button>
-              ))}
+              {thumbnailList?.map(
+                ({ id, path }: { id: number; path: string }) => (
+                  <button
+                    key={`thumbnail-${id}`}
+                    type='button'
+                    onClick={() => field.onChange(id)}
+                    className={
+                      field.value === id
+                        ? THUMBNAIL_STYLE.isSelected
+                        : THUMBNAIL_STYLE.isNotSelected
+                    }
+                  >
+                    <img
+                      src={path}
+                      alt={`thumbnail-${id}`}
+                      className='h-full w-full object-cover'
+                    />
+                  </button>
+                ),
+              )}
             </div>
           )}
         />

@@ -21,17 +21,13 @@ import {
   lectureOptionalInfoSchema,
   reservationSchema,
 } from 'features/add-class/types/add-class';
+import { useGetStudioInfo } from 'features/main/api/getStudioInfo';
 
 const TEXT = {
   button: {
     next: '다음 단계로',
     submit: '강의 등록하기',
   },
-};
-
-const MOCK_DATA = {
-  studioName: 'JUST JERKDANCE ACADEMY',
-  instructorName: '홍길동',
 };
 
 const ADD_CLASS_DEFAULT_DATA: AddClassFormType = {
@@ -67,6 +63,7 @@ const AddClassPage = () => {
   const { mutate: postLectureCreate } = usePostLectureCreate({
     id: Number(id),
   });
+  const { data: studioInfo } = useGetStudioInfo({ studioId: Number(id) });
   const [tabErrors, setTabErrors] = useState<Record<number, any>>({});
   const [tab, setTab] = useState(0);
   const {
@@ -115,7 +112,7 @@ const AddClassPage = () => {
   return (
     <div className='flex h-full flex-col items-center justify-center px-16'>
       <StudioHeader
-        title={MOCK_DATA.studioName}
+        title={studioInfo?.name || ''}
         handleGoBack={() => {
           if (tab === 0) {
             navigate(-1);
@@ -128,7 +125,7 @@ const AddClassPage = () => {
         <ProgressHeader step={tab} totalSteps={Object.keys(TabType).length} />
       </div>
       <div className='flex h-48 w-full items-center justify-center'>
-        <Subheader name={MOCK_DATA.instructorName} />
+        <Subheader name={studioInfo?.name || ''} />
       </div>
       <div className='w-full flex-1'>
         {TABS[TabType[tab]]({ control, errors: tabErrors[tab] || errors })}

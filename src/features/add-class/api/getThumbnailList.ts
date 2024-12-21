@@ -5,7 +5,10 @@ type getThumbnailListRequest = {
   studioId: number;
 };
 
-type getThumbnailListResponse = string[];
+type getThumbnailListResponse = {
+  id: number;
+  path: string;
+}[];
 
 const getThumbnailList = async (
   studioId: number,
