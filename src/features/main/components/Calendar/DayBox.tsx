@@ -1,21 +1,19 @@
 interface DayBoxProps {
   date: number;
-  isSelected: boolean;
   onSelect: (date: number) => void;
+  hasClass: boolean;
 }
 
-const DAY_STYLE = {
-  SELECTED: 'flex-1 text-center bg-grey-4 text-black',
-  UNSELECTED: 'flex-1 text-center bg-grey-4 text-grey-6',
-};
-
-const DayBox = ({ date, isSelected, onSelect }: DayBoxProps) => {
+const DayBox = ({ date, onSelect, hasClass }: DayBoxProps) => {
   return (
     <button
       onClick={() => onSelect(date)}
-      className={`${isSelected ? DAY_STYLE.SELECTED : DAY_STYLE.UNSELECTED}`}
+      className='relative flex h-60 w-44 flex-col items-center justify-center rounded-12 bg-background text-center font-600 text-white'
     >
       {date}
+      {hasClass && (
+        <div className='absolute bottom-8 h-4 w-4 rounded-full bg-white' />
+      )}
     </button>
   );
 };

@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
+import AddClassButtonIcon from 'assets/icons/add-class-button.png';
 
 const TEXT = {
   ADD_CLASS: '클래스 추가',
@@ -12,11 +13,8 @@ const AddClassButton = () => {
   };
 
   return (
-    <button
-      className='h-40 w-full rounded-10 bg-grey-4 text-16 font-500 text-white'
-      onClick={handleClick}
-    >
-      {TEXT.ADD_CLASS}
+    <button className='h-60 w-60 rounded-full' onClick={handleClick}>
+      <img src={AddClassButtonIcon} alt='add-class' className='h-full w-full' />
     </button>
   );
 };

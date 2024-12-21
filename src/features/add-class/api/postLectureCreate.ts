@@ -15,18 +15,17 @@ const postLectureCreate = async (
 ): Promise<PostLectureCreateResponse> => {
   const request = {
     ...data,
+    instructor: data.name,
+    difficulty: data.difficulty !== -1 ? data.difficulty : null,
+    genre: data.genre !== -1 ? data.genre : null,
+    description: data.description || null,
+    musicLink: data.musicLink || null,
     applyTime: {
       startDiff: data.applyTime.start.diff,
       startTime: data.applyTime.start.time,
       endDiff: data.applyTime.end.diff,
       endTime: data.applyTime.end.time,
     },
-    genre: data.genre === -1 ? null : data.genre,
-    difficulty: data.difficulty === -1 ? null : data.difficulty,
-    description: data.description ? data.description : null,
-    musicLink: data.musicLink ? data.musicLink : null,
-    type: data.type ? data.type : null,
-    instructor: 'mock',
     lectureTime: data.lectureTime.map((time) => ({
       start: time.start.toISOString(),
       end: time.end.toISOString(),
@@ -42,9 +41,11 @@ export const usePostLectureCreate = ({ id }: { id: number }) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: postLectureCreate,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['lecture', id] });
-      navigate(`/${id}/add-class/result`);
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['lecture'] });
+      navigate('result', {
+        state: variables,
+      });
     },
   });
 };

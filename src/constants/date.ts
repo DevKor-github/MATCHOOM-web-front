@@ -1,4 +1,27 @@
-export const DAYS_OF_WEEK = ['일', '월', '화', '수', '목', '금', '토'] as const;
+export const DAYS_OF_WEEK = [
+  'Sun',
+  'Mon',
+  'Tue',
+  'Wed',
+  'Thu',
+  'Fri',
+  'Sat',
+] as const;
+
+export const MONTH_NAMES = [
+  'JAN',
+  'FEB',
+  'MAR',
+  'APR',
+  'MAY',
+  'JUN',
+  'JUL',
+  'AUG',
+  'SEP',
+  'OCT',
+  'NOV',
+  'DEC',
+] as const;
 
 export const MONTHS = [
   '1월',
