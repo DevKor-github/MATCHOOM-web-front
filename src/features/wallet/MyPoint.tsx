@@ -24,7 +24,9 @@ const MyPoint = () => {
         {session?.name} 님
         <span className='mx-12 text-14 font-500'>잔여 포인트</span>
       </h4>
-      <div className='py-16 text-24 font-700 text-green'>{totalPoint} p</div>
+      <div className='py-16 text-24 font-700 text-green'>
+        {totalPoint?.toLocaleString()} p
+      </div>
       <ul>
         {userPoint?.map((point) => (
           <MyPointItem point={point.point} expiredAt={point.expiration} />
