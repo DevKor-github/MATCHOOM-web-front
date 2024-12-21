@@ -1,7 +1,13 @@
-import { DAYS_OF_WEEK } from 'constants/date';
-import { useState } from 'react';
+import { DAYS_OF_WEEK, MONTH_NAMES } from 'constants/date';
+import { useState, useRef } from 'react';
 import { getDaysInMonth, getFirstDayOfMonth } from 'features/main/utils/date';
 import DayBox from './DayBox';
+import WeekDayBox from './WeekDayBox';
+
+const TEXT = {
+  MONTH_VIEW: '월별보기',
+  WEEK_VIEW: '주별보기',
+};
 
 const VIEW_MODE = {
   MONTH: 'month',
@@ -16,12 +22,18 @@ interface CalendarProps {
 }
 
 const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
-  const [viewMode, setViewMode] = useState<ViewMode>(VIEW_MODE.MONTH);
+  const [viewMode, setViewMode] = useState<ViewMode>(VIEW_MODE.WEEK);
+  const [isDragging, setIsDragging] = useState(false);
+  const dragStartX = useRef<number>(0);
+  const dragThreshold = 50;
 
   const handleSelectDate = (date: number) => {
     setSelectedDate(
       new Date(selectedDate.getFullYear(), selectedDate.getMonth(), date),
     );
+    if (viewMode === VIEW_MODE.MONTH) {
+      setViewMode(VIEW_MODE.WEEK);
+    }
   };
 
   const getWeekDates = () => {
@@ -50,78 +62,94 @@ const Calendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
     }
   };
 
+  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+    setIsDragging(true);
+    dragStartX.current = 'touches' in e ? e.touches[0].clientX : e.clientX;
+  };
+
+  const handleDragEnd = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isDragging) return;
+
+    const currentX =
+      'changedTouches' in e ? e.changedTouches[0].clientX : e.clientX;
+
+    const diff = currentX - dragStartX.current;
+
+    if (Math.abs(diff) >= dragThreshold) {
+      handleNavigate(diff > 0 ? 'prev' : 'next');
+    }
+
+    setIsDragging(false);
+  };
+
   return (
-    <div className='w-full bg-white'>
-      <div className='mb-4 flex items-center justify-between'>
-        <div className='gap-2 flex'>
-          <button
-            className={`px-2 py-1 rounded ${
-              viewMode === VIEW_MODE.MONTH
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200'
-            }`}
-            onClick={() => setViewMode(VIEW_MODE.MONTH)}
-          >
-            월간
-          </button>
-          <button
-            className={`px-2 py-1 rounded ${
-              viewMode === VIEW_MODE.WEEK
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-200'
-            }`}
-            onClick={() => setViewMode(VIEW_MODE.WEEK)}
-          >
-            주간
-          </button>
+    <div className='w-full bg-background'>
+      <div className='mb-4 flex items-center justify-between px-8'>
+        <div className='text-center text-16 font-700'>
+          {MONTH_NAMES[selectedDate.getMonth()]}
         </div>
-        <div className='flex justify-between'>
-          <button onClick={() => handleNavigate('prev')}>
-            {viewMode === VIEW_MODE.MONTH ? '이전달' : '이전주'}
-          </button>
-          <div>
-            {selectedDate.getFullYear()}년 {selectedDate.getMonth() + 1}월
-          </div>
-          <button onClick={() => handleNavigate('next')}>
-            {viewMode === VIEW_MODE.MONTH ? '다음달' : '다음주'}
-          </button>
-        </div>
+        <button
+          className='px-2 py-1 rounded bg-blue-500 text-white'
+          onClick={() =>
+            setViewMode(
+              viewMode === VIEW_MODE.MONTH ? VIEW_MODE.WEEK : VIEW_MODE.MONTH,
+            )
+          }
+        >
+          {viewMode === VIEW_MODE.MONTH ? TEXT.WEEK_VIEW : TEXT.MONTH_VIEW}
+        </button>
       </div>
 
-      <div className='gap-1 grid grid-cols-7'>
-        {DAYS_OF_WEEK.map((day) => (
-          <div key={day} className='font-bold text-center'>
-            {day}
-          </div>
-        ))}
-
+      <div
+        className='grid w-full select-none grid-cols-7 bg-background'
+        onMouseDown={handleDragStart}
+        onMouseUp={handleDragEnd}
+        onMouseLeave={(e) => isDragging && handleDragEnd(e)}
+        onTouchStart={handleDragStart}
+        onTouchEnd={handleDragEnd}
+      >
         {viewMode === VIEW_MODE.MONTH ? (
           <>
+            {DAYS_OF_WEEK.map((day) => (
+              <div key={day} className='font-bold text-center text-12'>
+                {day}
+              </div>
+            ))}
             {[...Array(getFirstDayOfMonth(selectedDate))].map((_, index) => (
               <div key={`empty-${index}`} />
             ))}
 
             {[...Array(getDaysInMonth(selectedDate))].map((_, index) => (
-              <DayBox
+              <div
                 key={index + 1}
-                date={index + 1}
-                isSelected={index + 1 === selectedDate.getDate()}
-                onSelect={handleSelectDate}
-              />
+                className='flex flex-1 items-center justify-center'
+              >
+                <DayBox
+                  date={index + 1}
+                  onSelect={handleSelectDate}
+                  hasClass={true}
+                />
+              </div>
             ))}
           </>
         ) : (
-          getWeekDates().map((date) =>
+          getWeekDates().map((date, index) =>
             date.getMonth() === selectedDate.getMonth() ? (
-              <DayBox
+              <div
                 key={date.getTime()}
-                date={date.getDate()}
-                isSelected={
-                  date.getDate() === selectedDate.getDate() &&
-                  date.getMonth() === selectedDate.getMonth()
-                }
-                onSelect={handleSelectDate}
-              />
+                className='flex flex-1 items-center justify-center'
+              >
+                <WeekDayBox
+                  index={index}
+                  date={date.getDate()}
+                  isSelected={
+                    date.getDate() === selectedDate.getDate() &&
+                    date.getMonth() === selectedDate.getMonth()
+                  }
+                  onSelect={handleSelectDate}
+                  hasClass={true}
+                />
+              </div>
             ) : (
               <div key={`not-current-month-${date.getDate()}`} />
             ),

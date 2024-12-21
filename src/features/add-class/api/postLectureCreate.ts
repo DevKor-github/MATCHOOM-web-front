@@ -15,6 +15,11 @@ const postLectureCreate = async (
 ): Promise<PostLectureCreateResponse> => {
   const request = {
     ...data,
+    instructor: data.name,
+    difficulty: data.difficulty !== -1 ? data.difficulty : null,
+    genre: data.genre !== -1 ? data.genre : null,
+    description: data.description || null,
+    musicLink: data.musicLink || null,
     applyTime: {
       startDiff: data.applyTime.start.diff,
       startTime: data.applyTime.start.time,
@@ -23,7 +28,7 @@ const postLectureCreate = async (
     },
   };
   console.log('request', request);
-  const response = await authInstance.post('/lectures/create', request);
+  const response = await authInstance.post('/lecture', request);
   return response.data;
 };
 
@@ -32,9 +37,11 @@ export const usePostLectureCreate = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: postLectureCreate,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['lectures'] });
-      navigate('/add-class/result');
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['lecture'] });
+      navigate('result', {
+        state: variables,
+      });
     },
   });
 };
