@@ -1,6 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
 import AddClassPage from 'pages/AddClassPage';
 import AddResultPage from 'pages/AddResultPage';
+import LectureDetailPage from 'pages/LectureDetailPage';
+import LectureRegisterPage from 'pages/LectureRegisterPage';
 import LoginPage from 'pages/LoginPage';
 import MainPage from 'pages/MainPage';
 import OAuthPage from 'pages/OAuthPage';
@@ -29,6 +31,14 @@ export const createRouter = () => {
         {
           path: 'auth/kakao/callback',
           element: <OAuthPage />,
+        },
+        {
+          path: ':id/:lectureId',
+          element: <LectureDetailPage />,
+        },
+        {
+          path: ':id/:lectureId/register',
+          element: <LectureRegisterPage />,
         },
         {
           path: ':id/wallet',
