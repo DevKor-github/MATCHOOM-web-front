@@ -34,7 +34,7 @@ type LectureDetailResponse = {
 const GetLectureDetail = async (
   lectureId: number,
 ): Promise<LectureDetailResponse> => {
-  const response = await authInstance.get(`/lecture/${lectureId}`);
+  const response = await authInstance.get(`/lecture/${lectureId}/info`);
   return response.data;
 };
 
