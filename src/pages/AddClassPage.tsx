@@ -60,9 +60,7 @@ const tabSchemas = {
 const AddClassPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { mutate: postLectureCreate } = usePostLectureCreate({
-    id: Number(id),
-  });
+  const { mutate: postLectureCreate } = usePostLectureCreate();
   const { data: studioInfo } = useGetStudioInfo({ studioId: Number(id) });
   const [tabErrors, setTabErrors] = useState<Record<number, any>>({});
   const [tab, setTab] = useState(0);

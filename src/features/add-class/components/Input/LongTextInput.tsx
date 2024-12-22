@@ -4,13 +4,11 @@ const LongTextInput = ({
   name,
   placeholder,
   control,
-  secureTextEntry = false,
   keyboardType = 'default',
 }: {
   name: string;
   placeholder: string;
   control: Control<any>;
-  secureTextEntry?: boolean;
   keyboardType?: 'default' | 'numeric';
 }) => (
   <Controller

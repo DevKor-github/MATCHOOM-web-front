@@ -1,4 +1,4 @@
-import { Outlet, RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { createRouter } from 'routes';
 import Layout from 'components/common/Layout';
 import Provider from 'components/common/Provider';

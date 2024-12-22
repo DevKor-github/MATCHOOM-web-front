@@ -1,19 +1,12 @@
 import { useParams } from 'react-router-dom';
-import { useGetUserInfo, useGetUserPoint } from 'services/user';
+import { useGetUser, useGetUserPoint } from 'services/user';
 import PrimaryCard from 'components/explore/Card/PrimaryCard';
 import { useGetLectureDetail } from 'features/lecturedetail/api/getLectureDetail';
 import RegisterButton from 'features/lectureregister/buttons/RegisterButton';
 
-const MOCK_CARD = {
-  title: 'title',
-  description: 'description',
-  guide: 'guide',
-  imageSrc: 'https://via.placeholder.com/150',
-};
-
 const ClassRegisterPage = () => {
   const { id, lectureId } = useParams();
-  const { data: user } = useGetUserInfo(Number(id));
+  const { data: user } = useGetUser();
   const { data: userPoint } = useGetUserPoint(Number(id));
   const totalPoint = Array.isArray(userPoint)
     ? userPoint.reduce((acc, curr) => acc + curr.point, 0)

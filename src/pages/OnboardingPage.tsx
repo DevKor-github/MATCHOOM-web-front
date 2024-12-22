@@ -13,6 +13,7 @@ interface OnboardingFormValue {
   phone: string;
   bank: string;
   account: string;
+  accountHolder: string;
 }
 
 const OnboardingPage = () => {
@@ -87,6 +88,17 @@ const OnboardingPage = () => {
           }}
         >
           계좌번호
+        </TextInput>
+        <TextInput
+          name='accountHolder'
+          placeholder='계좌주를 입력해주세요.'
+          required
+          control={control}
+          rules={{
+            required: true,
+          }}
+        >
+          계좌주
         </TextInput>
         <button className='absolute bottom-36 h-56 w-[calc(100%-40px)] rounded-full bg-gradient-to-r from-[#74EFC2] to-[#4174F7] text-18 font-700 text-black'>
           회원가입 하기

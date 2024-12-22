@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import BackIcon from 'assets/icons/left-arrow.png';
-import LogoIcon from 'assets/icons/logo-header.svg';
 
 const StudioHeader = ({
   title,

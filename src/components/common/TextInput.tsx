@@ -1,7 +1,5 @@
-import DeleteIcon from 'public/icons/delete.svg';
-import { KeyboardEvent, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import {
-  FieldPath,
   FieldValues,
   UseControllerProps,
   useController,

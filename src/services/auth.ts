@@ -1,5 +1,4 @@
-import { Cookies } from 'react-cookie';
-import { getRefreshToken, REFRESH_TOKEN } from 'utils/handleToken';
+import { getRefreshToken } from 'utils/handleToken';
 import { UserType } from 'types/common';
 import { instance } from './config';
 

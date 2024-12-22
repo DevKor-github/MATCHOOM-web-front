@@ -1,10 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import AddClassButtonIcon from 'assets/icons/add-class-button.png';
 
-const TEXT = {
-  ADD_CLASS: '클래스 추가',
-};
-
 const AddClassButton = () => {
   const { id } = useParams();
   const navigate = useNavigate();

@@ -36,7 +36,7 @@ const postLectureCreate = async (
   return response.data;
 };
 
-export const usePostLectureCreate = ({ id }: { id: number }) => {
+export const usePostLectureCreate = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   return useMutation({
