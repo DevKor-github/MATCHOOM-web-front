@@ -6,7 +6,7 @@ type LectureDetailRequest = {
 };
 
 type LectureDetailResponse = {
-  thumnail: string;
+  thumbnail: string;
   lectureTime: {
     start: string;
     end: string;

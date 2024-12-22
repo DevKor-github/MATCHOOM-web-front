@@ -12,10 +12,10 @@ const LectureDetailPage = () => {
   });
 
   return (
-    <div>
+    <div className='flex w-full flex-col overflow-y-scroll'>
       <ClassHeader
         imageSrc={
-          lectureDetail?.thumnail || 'http://via.placeholder.com/640x480'
+          lectureDetail?.thumbnail || 'http://via.placeholder.com/640x480'
         }
         studioName={lectureDetail?.studioName}
         teacherName={lectureDetail?.instructor}
@@ -35,7 +35,9 @@ const LectureDetailPage = () => {
         detail={lectureDetail?.description}
       />
       <div className='mb-100'></div>
-      <PaymentButton />
+      <div className='fixed bottom-20 w-full px-20'>
+        <PaymentButton />
+      </div>
     </div>
   );
 };

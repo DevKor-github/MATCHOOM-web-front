@@ -47,7 +47,7 @@ const ClassInfo = ({
   const levelText = mapLevelToText(level);
 
   return (
-    <div className='mx-20 flex flex-col gap-4 text-white'>
+    <div className='mx-20 flex flex-col gap-4 text-white '>
       <div className='flex flex-row gap-8'>
         <DateIcon />
         <span className='text-12 font-500'>{date}</span>

@@ -62,7 +62,7 @@ const MainPage = () => {
             {filteredLectures?.map((lecture, index) => (
               <button
                 key={`${lecture.instructor + index}`}
-                onClick={() => navigate(`class/${lecture.lectureId}`)}
+                onClick={() => navigate(`${lecture.lectureId}`)}
               >
                 <Card
                   guide={lecture.studioName}
