@@ -19,25 +19,24 @@ const LectureDetailPage = () => {
         }
         studioName={lectureDetail?.studioName}
         teacherName={lectureDetail?.instructor}
-        type={lectureDetail?.type}
+        type={lectureDetail?.type || '원데이'}
         genre={lectureDetail?.genre}
       />
-      <div className='mb-12 mt-24 border border-[#3C4048]'></div>
+      <div className='mx-20 my-32 border border-[#3C4048] ' />
       <ClassInfo
         lectureTime={lectureDetail?.lectureTime || []}
         location={lectureDetail?.room}
         level={lectureDetail?.difficulty}
         price={lectureDetail?.price}
+        minCapacity={lectureDetail?.minCapacity}
+        maxCapacity={lectureDetail?.maxCapacity}
       />
-      <div className='mb-16 mt-24 border border-[#3C4048]'></div>
       <ClassDetailInfo
         videoSrc={lectureDetail?.musicLink}
         detail={lectureDetail?.description}
       />
       <div className='mb-100'></div>
-      <div className='fixed bottom-20 w-full px-20'>
-        <PaymentButton />
-      </div>
+      <PaymentButton />
     </div>
   );
 };

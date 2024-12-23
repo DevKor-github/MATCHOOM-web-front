@@ -1,20 +1,19 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
-const PaymentButton = () => {
+const GoToMainButton = () => {
   const navigate = useNavigate();
-  const { id, lectureId } = useParams();
+  const { id } = useParams();
   const handleClick = () => {
-    navigate(`/${id}/${lectureId}/register`);
+    navigate(`/${id}`);
   };
-
   return (
     <button
       className='fixed bottom-20 mx-20 h-64 w-460 rounded-full bg-gradient-to-r from-blue to-green py-8 text-20 font-700 text-black'
       onClick={handleClick}
     >
-      신청하기
+      메인 화면으로
     </button>
   );
 };
 
-export default PaymentButton;
+export default GoToMainButton;

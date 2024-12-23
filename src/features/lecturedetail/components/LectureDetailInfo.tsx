@@ -21,19 +21,26 @@ const ClassDetailInfo = ({
   videoSrc: string | undefined;
   detail: string | undefined;
 }) => {
+  const embedUrl = getYoutubeEmbedUrl(videoSrc || '');
+
+  // 기본 대체 영상 URL
+  const fallbackVideoUrl = 'https://www.youtube.com/embed/pokccDdB3RE';
   return (
-    <div className='gpa-12 mx-20 flex flex-col text-white'>
-      <div className='mb-12 ml-4 text-16 font-700'>강의 소개</div>
-      <iframe
-        className='h-200 w-full rounded-12'
-        src={`${getYoutubeEmbedUrl(videoSrc || '')}?enablejsapi=1&origin=http://127.0.0.1:3000`}
-        title='YouTube video player'
-        loading='lazy'
-        allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-        allowFullScreen
-        referrerPolicy='strict-origin-when-cross-origin'
-        sandbox='allow-same-origin allow-scripts allow-popups allow-forms allow-presentation'
-      />
+    <div className='mx-20 flex flex-col gap-12 text-white'>
+      <div className='mb-12 ml-4 text-20 font-700'>강의 소개</div>
+
+      <div className='relative w-full' style={{ aspectRatio: '353 / 200' }}>
+        <iframe
+          className='absolute inset-0 h-full w-full rounded-12'
+          src={embedUrl || fallbackVideoUrl} // embedUrl이 유효하지 않을 경우 fallback 영상 표시
+          title='YouTube video player'
+          loading='lazy'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+          allowFullScreen
+          referrerPolicy='strict-origin-when-cross-origin'
+          sandbox='allow-same-origin allow-scripts allow-popups allow-forms allow-presentation'
+        />
+      </div>
       <p className='max-w-352 break-words text-12 font-500'>{detail}</p>
     </div>
   );
