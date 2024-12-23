@@ -43,10 +43,10 @@ const ClassHeader = ({
   const genreText = mapGenreToText(genre);
   return (
     <div className='w-full text-white'>
-      <img className='mb-16 h-332 w-full' src={imageSrc} alt='ClassImage' />
+      <img className='mb-24 h-332 w-full' src={imageSrc} alt='ClassImage' />
       <div className='mx-20 flex flex-col'>
-        <p className='mb-4 text-16 font-600'>{studioName}</p>
-        <p className='mb-12 text-24 font-700'>{teacherName}</p>
+        <p className='mb-8 text-16 font-600'>{studioName}</p>
+        <p className='mb-20 text-24 font-700'>{teacherName}</p>
         <div className='flex flex-row items-center justify-start space-x-4'>
           <div className='rounded-full border border-green'>
             <p className='px-12 py-4 text-12 font-600 text-green'>{type}</p>
