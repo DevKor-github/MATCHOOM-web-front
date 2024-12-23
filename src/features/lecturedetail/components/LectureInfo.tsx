@@ -75,7 +75,11 @@ const ClassInfo = ({
       <div className='flex flex-row items-center gap-8'>
         <CountIcon />
         <span className='text-16 font-500'>
-          신청 인원: {minCapacity}명/{maxCapacity}명
+          신청 인원:
+          <span className='ml-4 text-green'>
+            {String(minCapacity).padStart(2, '0')}명
+          </span>
+          /{maxCapacity}명
         </span>
       </div>
     </div>
